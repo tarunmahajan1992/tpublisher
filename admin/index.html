@@ -1,0 +1,169 @@
+<!doctype html>
+<html>
+<head>
+<link href="css/style.css" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+<!--<script src="display.js"></script>-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.5/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.5/angular-route.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script src="js/ng-file-upload.min.js"></script>
+<script src="js/app-func.js"></script>
+<script src="js/bootbox.min.js"></script>
+
+<script src="js/app.js"></script>
+<meta charset="utf-8">
+<title>Untitled Document</title>
+<style>
+.selected{
+	background-color:#CCC;
+}
+tbody tr, a{
+cursor:pointer;	
+}
+.left-div{
+border-right: 2px solid #999;	
+}
+.row-eq-height{
+display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+</style>
+</head>
+
+
+<body ng-app="myapp" ng-controller="HelloController" >
+	<div class="container-fluid">
+		<nav class="navbar navbar-default navbar-static-top  " role="navigation">
+    		<div class="navbar-header">
+				 <a class="navbar-brand" href="#">
+                   <img height="40" src="images/index.png" alt="Brand"></img>
+                 </a>
+			</div>
+    		 <ul class="nav nav-pills navbar-right navbar-form ">
+       			 <li class="active" role="presentation">
+           			 <a href="#">Home</a>
+       			 </li>
+       			 <li role="presentation" class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
+            File Operations <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" role="menu">
+            <li ><a ng-click="newFolder() ">New Folder</a></li>
+            <li><a ng-click="delete()">Delete</a></li>
+            <li><a ng-click="deleteDir()">Delete Folder</a></li>
+            <li class="divider"></li>
+            <li><a ng-click="downloadFiles()">Download</a></li>
+          </ul>
+        </li>
+       			 <li role="presentation">
+           			 <a href="#">Message</a>
+       	 		</li>
+        	 </ul>
+		</nav>
+	</div>
+
+
+	<div  class="container" >
+    <div class="row row-eq-height">
+    <div class="col-sm-3 left-div" >
+    <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Operations</th>
+          </tr>
+        </thead>
+    <tbody>
+   <tr id="file-traversal-btn"><td >File Traversal</td></tr>
+    <tr id="upload-btn"><td>File Upload</td></tr>
+    </tbody>
+    </table>
+    </div>
+    <div class="col-sm-9" >
+    <div id="file-traversal">
+<div id="searchBox">
+        	<input type="text" ng-model="searchText" placeholder="Search"  ng-change=		                                       								"onKeyPress($event)"/>
+        </div>
+         
+ 		<button title="refresh" class="margin-top btn btn-primary pull-right" ng-click="exploreDirectory()"><span class="glyphicon glyphicon-refresh" ></span></button>
+       
+   <br />
+                                       
+
+   <table class="table ">
+        <thead>
+          <tr>
+            <th>File Name</th>
+            <th>Extension</th>
+            <th>Directory/File</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr style="background-color:#666;color:#FFF" ng-if="message!='public'" ng-click="exploreDirectoryRel('/..')">
+        <td >/..</td>
+        <td>Parent Directory</td>
+        <td>Back</td></tr>
+          <tr ng-repeat="file in files|filter:searchText" ng-class="inListDir(file.Path)" ng-click="addRemoveFromListDir(file.Path)" ng-if="file.IsDirectory" ng-dblclick="exploreDirectory(file.Path)" title="open">
+          	
+            <td>{{file.Name}}</td>
+            <td>{{file.Ext}}</td>
+            <td >Directory</td>
+          </tr>
+          <tr ng-repeat="file in files|filter:searchText" 
+          ng-if="!file.IsDirectory" ng-click="addRemoveFromList(file.Path)"
+           ng-class="inList(file.Path)" ng-dblclick="showFile(file.Path)">
+          	
+            <td>{{file.Name}}</td>
+            <td>{{file.Ext}}</td>
+            <td >File</td>
+          </tr>
+          
+         </tbody>
+         <tfoot>
+            
+ 			<td colspan="12" style="background-color:#09C; color:#FFF">
+ 			 <div class="col-centered" >
+ 			Folder Structure:<b>{{message}}</b>
+        </div>
+        </td>
+  			</tfoot>
+            
+      </table>
+</div>
+
+
+<div id="upload-div">
+<!--<label >Select File to be uploaded</label>-->
+<!--<form class="form-group" >
+<input type="file" class="form-control" file-model="myFile"/>
+</form>-->
+<!-- <button class="btn btn-default btn-primary" ng-click="uploadFile()">upload me</button>
+--> 
+  <div class="panel panel-default margin-top">
+  <div class="panel-heading">
+    Select File to be uploaded
+  </div>
+  <div class="panel-body">
+  <form  >
+<input type="file"  file-model="myFile"/>
+</form>
+</div>
+</div><!--panel primary-->
+<button class="btn btn-default btn-primary" ng-click="uploadFile()">upload me</button>
+
+<div class="panel panel-primary margin-top " >
+  <div class="panel-heading">
+    File Upload Path: {{message}}
+  </div>
+  </div><!--panel primary-->
+    
+    </div>
+	</div>  
+    
+</div>
+
+</body>
+</html>

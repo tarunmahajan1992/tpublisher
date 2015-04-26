@@ -1,0 +1,106 @@
+
+.body{
+	margin:opx;
+	padding:0px;
+	
+}
+/*.pagination {
+    display: inline-block;
+    padding-left: 0px;
+    margin: 100px 400px ;
+    border-radius: 10px;
+	
+}
+
+.pagination > li {
+    display: inline;
+}
+
+.pagination > li > a, .pagination > li > span {
+    position: relative;
+    float: left;
+    padding: 6px 12px;
+    margin-left: -1px;
+    line-height: 1.42857;
+    color: #337AB7;
+    text-decoration: none;
+    background-color: #FFF;
+    border: 1px solid #DDD;
+}
+.pagination > li > a:hover{
+	background-color:#CCC;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0px;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0px, 0px, 0px, 0px);
+    border: 0px none;
+}
+
+.disabled{
+	background-color:#000;
+}*/
+
+@media (min-width: 1200px) {
+  .container {
+    width: 900px;
+   
+
+  }
+}
+.container{
+	 border:1px #e4e4e4 solid;	
+}
+
+#searchBox{
+	margin:10px auto;
+	display:inline-block;
+	float:left;
+	display:block;
+	}
+	
+	.hidden1{
+	display:none;
+
+}
+.visible{
+	display:block;
+	position:relative;
+	list-style-type:none;
+	margin-right:20px;
+	z-index:10;
+	width:200px;
+}
+.visible li{
+	padding-right:50px;
+	padding-left:50px;
+	
+}
+.checked{
+	background:#CCC;
+	}
+.dropdown #items{
+	position:absolute;
+	top:100%;
+	left:0;
+	margin-top:0px;
+	
+}
+.dropdown{
+	position:relative;
+	float:right;
+	display:block;
+}
+.margin-top{
+	margin-top:10px;
+}
+
+.drop-box{
+ border: dotted 3px lightgray; 
+}
+  
