@@ -113,11 +113,11 @@ module.exports={
 			 console.log(req.completePath);
 			fs.unlink(req.completePath,function(error){
 				if(error) return res.json({error:"error deleting"});
-				res.json({status:"deleted"});
+				res.json({message:"File's successfully deleted"});
 				});
 		 }
 		 else{
-			 res.json({error:"file path not valid"});
+			 res.json({message:"Some Error occurred. Contact system administrator"});
 			 }
 		 	
 	},
@@ -145,8 +145,8 @@ module.exports={
 		dirStruct=path.join(rootDirectory,dirStruct);
 		
 		mkdirp(dirStruct, function (err) {
-    	if (err) res.json({error:"error"});
-    	else res.json({success:"done"});
+    	if (err) res.json({message:"Some error occurred."});
+    	else res.json({message:"Folder successfully created"});
 		});
 		
 		
@@ -162,7 +162,7 @@ module.exports={
 			})
 		}
 		else{
-		return res.json({error:"directory path not valid"});	
+		return res.json({message:"Error in deletion.Contact System administrator"});	
 		}
 	}
 	

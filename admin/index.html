@@ -14,7 +14,7 @@
 
 <script src="js/app.js"></script>
 <meta charset="utf-8">
-<title>Untitled Document</title>
+<title>tPublisher Admin</title>
 <style>
 .selected{
 	background-color:#CCC;
@@ -45,7 +45,7 @@ display: -webkit-box;
 			</div>
     		 <ul class="nav nav-pills navbar-right navbar-form ">
        			 <li class="active" role="presentation">
-           			 <a href="#">Home</a>
+           			 <a href="..\home.html">Home</a>
        			 </li>
        			 <li role="presentation" class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
@@ -60,7 +60,7 @@ display: -webkit-box;
           </ul>
         </li>
        			 <li role="presentation">
-           			 <a href="#">Message</a>
+           			 <a href="./../logout">Logout</a>
        	 		</li>
         	 </ul>
 		</nav>
@@ -126,7 +126,7 @@ display: -webkit-box;
             
  			<td colspan="12" style="background-color:#09C; color:#FFF">
  			 <div class="col-centered" >
- 			Folder Structure:<b>{{message}}</b>
+ 			Folder Structure:<b>{{message}}</b><div class="pull-right">{{status}}</div>
         </div>
         </td>
   			</tfoot>
@@ -156,7 +156,7 @@ display: -webkit-box;
 
 <div class="panel panel-primary margin-top " >
   <div class="panel-heading">
-    File Upload Path: {{message}}
+    File Upload Path: {{message}} &nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp;{{uploadMessage}}
   </div>
   </div><!--panel primary-->
     

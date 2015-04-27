@@ -1,3 +1,4 @@
+var ulMessage="";
 angular.module("myapp", ['ngRoute'])
     .controller("HelloController",['$scope','$http','fileUpload', function($scope,$http,fileUpload) {
 		
@@ -6,8 +7,11 @@ angular.module("myapp", ['ngRoute'])
 	   $scope.currentPath=null;
 	   $scope.uploadFilePath=null;
 	   $scope.relativePath='/public';
+	   $scope.status="";
 	   $scope.list=[];
 	    $scope.listDir=[];
+		$scope.uploadMessage="";
+		
 	   $scope.fileRequest=function(path){
 	   params={path:path};
 	   $http({
@@ -22,7 +26,7 @@ angular.module("myapp", ['ngRoute'])
 		   $scope.message=files[0].relativePath;
 		   $scope.relativePath=files[0].relativePath;
 		   
-		   console.log($scope.relativePath);
+		   //console.log($scope.relativePath);
 		   if(files.length==1){
 			   $scope.message+=' Empty Directory';
 		   }
@@ -115,7 +119,9 @@ angular.module("myapp", ['ngRoute'])
 			}
 			if(len!=0){
 				path='/downloadFile?path='+$scope.list[0];
+				$scope.status="Download started";
 			window.open(path,'_blank');	
+			
 			}
 			 else{
 				   bootbox.alert("No File selected");
@@ -135,7 +141,9 @@ angular.module("myapp", ['ngRoute'])
 							url:'/removeDir',
 							method:'GET',
 							params:params
-							});
+							}).success(function(data){
+								$scope.status=data.message;
+																});
 					 })
 					$scope.listDir=[];
 					$scope.exploreDirectory();
@@ -156,7 +164,9 @@ angular.module("myapp", ['ngRoute'])
 							url:'/removeFile',
 							method:'GET',
 							params:params
-							});
+							}).success(function(data){
+								$scope.status=data.message;
+								})
 					 })
 					$scope.list=[];
 					$scope.exploreDirectory();
@@ -193,7 +203,7 @@ angular.module("myapp", ['ngRoute'])
 							console.log(foldername);
                            $http.get('/makedir',{params:params})
 						   .success(function(data){
-							   console.log(data);
+							   $scope.status=data.message+". Press refresh button at Right";
 							   })
 							   .error(function(error){
 								console.log(error) ;  
@@ -209,13 +219,19 @@ angular.module("myapp", ['ngRoute'])
 			
 		}
 		
+		$scope.$watch(function(){return ulMessage},function(){
+			$scope.uploadMessage=ulMessage	;
+			//console.log("watch used");
+		})
 		$scope.uploadFile = function(){
         var file = $scope.myFile;
 		var uploadPath=$scope.relativePath;
 		console.log(uploadPath+"upload path");
         console.log('file is ' + JSON.stringify(file)+" "+uploadPath);
         var uploadUrl = "/upload";
-        fileUpload.uploadFileToUrl(file, uploadUrl,uploadPath);
+		$scope.uploadMessage="Uploaded started. You can navigate away."
+		//console.log("Uploaded started. You can navigate away");
+        ulMessage=fileUpload.uploadFileToUrl(file, uploadUrl,uploadPath);
         }
 		
 				  } ])
@@ -251,7 +267,8 @@ angular.module("myapp", ['ngRoute'])
 					  .service('fileUpload', ['$http', function ($http) {
 	                 	this.uploadFileToUrl = function(file, uploadUrl,uploadPath){
 		              	var fd = new FormData();
-			           console.log(uploadPath);
+						
+			           //console.log(uploadPath);
 						fd.append('uploadPath',uploadPath);
 						 fd.append('filename', file);
 			            $http.post(uploadUrl, fd, {
@@ -259,10 +276,16 @@ angular.module("myapp", ['ngRoute'])
 			         	headers: {'Content-Type': undefined}
 			             })
 			           .success(function(data){
-						   console.log(JSON.stringify(data));
+						   //console.log(JSON.stringify(data));
+						   ulMessage="Suuccessfully uploaded. Refresh file page."
+						   return ulMessage;
 		                  	})
 		            	.error(function(){
+							ulMessage="Some error occured. Tell tarun about this."
+							return ulMessage;
 			               });
+						   
+						   
 		                  }
 	                    }])
 				  
